@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pita Daiza - Menu</title>
+    <style>
+        /* ── Exact palette lifted from the coming-soon CSS ── */
+        :root {
+            --orange:      #FF8C00;
+            --orange-dark: #FF6347;
+            --orange-light:#FFA500;
+            --cream:       #FFF9E6;
+            --brown:       #8B4513;
+            --brown-dark:  #654321;
+            --brown-hover: #A0522D;
+            --text-shadow: rgba(0, 0, 0, 0.3);
+            --white-dim:   rgba(255, 255, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* Same gradient as coming-soon body */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FFA500 0%, #FF8C00 50%, #FF6347 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Same layered radial overlay as coming-soon body::before */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0,0,0,0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .ticker-wrap, header, main, footer { position: relative; z-index: 1; }
+
+        /* ── TICKER ── */
+        .ticker-wrap {
+            background: rgba(0, 0, 0, 0.25);
+            border-bottom: 2px solid rgba(255,255,255,0.4);
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 7px 0;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 32s linear infinite;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 1px 1px 4px var(--text-shadow);
+            letter-spacing: 0.4px;
+        }
+
+        .ticker-content .sep {
+            margin: 0 36px;
+            color: var(--cream);
+            opacity: 0.7;
+        }
+
+        @keyframes ticker {
+            from { transform: translateX(100vw); }
+            to   { transform: translateX(-100%); }
+        }
+
+        /* ── HEADER ── */
+        header {
+            padding: 20px 30px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            border-bottom: 3px solid rgba(255,255,255,0.4);
+            background: rgba(0,0,0,0.12);
+        }
+
+        header img.logo {
+            height: 90px;
+            width: auto;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.45));
+            animation: floatAndPulse 4s ease-in-out infinite;
+        }
+
+        .header-text h1 {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 10px var(--text-shadow);
+            line-height: 1;
+        }
+
+        .header-text p {
+            color: var(--cream);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-shadow: 2px 2px 8px var(--text-shadow);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        @keyframes floatAndPulse {
+            0%, 100% { transform: translateY(0) scale(1); }
+            25%       { transform: translateY(-8px) scale(1.02); }
+            50%       { transform: translateY(-12px) scale(1.04); }
+            75%       { transform: translateY(-8px) scale(1.02); }
+        }
+
+        /* ── MAIN ── */
+        main {
+            flex: 1;
+            padding: 28px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            max-width: 860px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-title {
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-align: center;
+            text-shadow: 2px 2px 8px var(--text-shadow);
+            border-bottom: 2px solid var(--white-dim);
+            padding-bottom: 10px;
+        }
+
+        /* ── MENU ITEM CARD ── */
+        .menu-item {
+            background: rgba(255, 255, 255, 0.18);
+            border: 3px solid rgba(255, 255, 255, 0.55);
+            border-radius: 30px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: relative;
+            transition: transform 0.25s, box-shadow 0.25s, background 0.25s, border-color 0.25s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+            background: rgba(255,255,255,0.26);
+            border-color: white;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 7px;
+            border-radius: 30px 0 0 30px;
+        }
+        .item-small::before  { background: rgba(255,255,255,0.7); }
+        .item-medium::before { background: var(--brown); }
+        .item-large::before  { background: var(--brown-dark); }
+
+        .item-info { padding: 22px 20px 22px 28px; }
+
+        .item-name {
+            font-size: 1.9rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 8px var(--text-shadow);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            line-height: 1;
+        }
+
+        .item-animal {
+            font-size: 2.2rem;
+            display: inline-block;
+            animation: wobble 3s ease-in-out infinite;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+        }
+        .item-small  .item-animal { animation-delay: 0s; }
+        .item-medium .item-animal { animation-delay: 1s; }
+        .item-large  .item-animal { animation-delay: 2s; }
+
+        @keyframes wobble {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            20%  { transform: rotate(-8deg) scale(1.12); }
+            40%  { transform: rotate(8deg)  scale(1.12); }
+            60%  { transform: rotate(-4deg); }
+            80%  { transform: rotate(4deg);  }
+        }
+
+        .item-desc {
+            font-size: 0.82rem;
+            color: var(--cream);
+            text-shadow: 1px 1px 5px var(--text-shadow);
+            margin-top: 6px;
+        }
+
+        .item-badge {
+            display: inline-block;
+            margin-top: 9px;
+            padding: 3px 14px;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .item-small  .item-badge { background: rgba(255,255,255,0.25); color: white;       border: 1px solid rgba(255,255,255,0.6); }
+        .item-medium .item-badge { background: var(--brown);            color: white;       border: 1px solid var(--brown-hover); }
+        .item-large  .item-badge { background: var(--brown-dark);       color: var(--cream); border: 1px solid var(--brown); }
+
+        /* Price — same brown gradient as notify-btn */
+        .item-price {
+            padding: 22px 26px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--brown), var(--brown-dark));
+            min-width: 130px;
+            border-left: 3px solid rgba(255,255,255,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .price-amount {
+            font-size: 2.4rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+            line-height: 1;
+        }
+
+        .price-currency {
+            font-size: 0.72rem;
+            color: var(--cream);
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        /* ── EXTRAS ── */
+        .extras-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .extra-item {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.45);
+            border-radius: 20px;
+            padding: 11px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.88rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .extra-item:hover { background: rgba(255,255,255,0.25); transform: translateY(-2px); }
+        .extra-name  { color: white;        font-weight: 600; text-shadow: 1px 1px 4px var(--text-shadow); }
+        .extra-price { color: var(--cream);  font-weight: bold; text-shadow: 1px 1px 4px var(--text-shadow); }
+
+        /* ── SAUCES — pill style copied straight from notify-btn ── */
+        .sauces-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .sauce-pill {
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: 3px solid rgba(255,255,255,0.75);
+            background: rgba(255,255,255,0.18);
+            color: white;
+            text-shadow: 1px 1px 4px var(--text-shadow);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+            cursor: default;
+        }
+        .sauce-pill:hover {
+            transform: translateY(-3px) rotate(2deg);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.3);
+        }
+
+        .sauces-note {
+            text-align: center;
+            font-size: 0.72rem;
+            color: var(--cream);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 4px var(--text-shadow);
+            opacity: 0.85;
+        }
+
+        /* ── NOTICE ── */
+        .notice {
+            text-align: center;
+            font-size: 0.72rem;
+            color: rgba(255,249,230,0.6);
+            text-shadow: 1px 1px 4px var(--text-shadow);
+            border-top: 1px solid var(--white-dim);
+            padding-top: 10px;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: rgba(0,0,0,0.22);
+            border-top: 2px solid rgba(255,255,255,0.35);
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .weather-widget { display: flex; align-items: center; gap: 12px; }
+        .weather-icon   { font-size: 2rem; }
+        .weather-location {
+            display: block;
+            font-size: 0.62rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--cream);
+            opacity: 0.7;
+        }
+        .weather-temp {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 8px var(--text-shadow);
+            line-height: 1;
+        }
+        .weather-desc { font-size: 0.73rem; color: var(--cream); opacity: 0.85; }
+
+        .footer-clock {
+            font-size: 1.9rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 8px var(--text-shadow);
+            font-variant-numeric: tabular-nums;
+            text-align: center;
+        }
+        .footer-sub {
+            font-size: 0.62rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--cream);
+            opacity: 0.7;
+            text-align: center;
+            margin-top: 2px;
+        }
+
+        .footer-right { text-align: right; }
+        .footer-brand {
+            color: white; font-weight: bold; font-size: 0.88rem;
+            text-shadow: 1px 1px 5px var(--text-shadow);
+        }
+        .footer-tagline {
+            font-size: 0.65rem; color: var(--cream); opacity: 0.65;
+            letter-spacing: 2px; text-transform: uppercase; margin-top: 3px;
+        }
+        .footer-phone {
+            font-size: 1rem; font-weight: bold; color: white;
+            text-shadow: 1px 1px 5px var(--text-shadow); margin-top: 4px;
+        }
+
+        @media (max-width: 600px) {
+            .header-text h1   { font-size: 1.5rem; }
+            header img.logo   { height: 65px; }
+            .item-name        { font-size: 1.4rem; }
+            .price-amount     { font-size: 1.9rem; }
+            .item-price       { padding: 16px 16px; min-width: 100px; }
+            .extras-grid      { grid-template-columns: repeat(2, 1fr); }
+            footer            { flex-direction: column; align-items: center; text-align: center; }
+            .footer-right     { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NEWS TICKER -->
+<div class="ticker-wrap">
+    <div class="ticker-content">
+        🗞️ BREAKING: Local man orders third Large Ostrich in a row — doctors baffled
+        <span class="sep">★</span>
+        WEATHER ALERT: High chance of hot sauce on Friday afternoon
+        <span class="sep">★</span>
+        ECONOMY: Garlic sauce price holds steady for 14th consecutive week
+        <span class="sep">★</span>
+        SPORTS: Pita Daiza FC wins imaginary doner league for the third year running 🏆
+        <span class="sep">★</span>
+        LIFESTYLE: Scientists confirm kebab best enjoyed after midnight — study ongoing
+        <span class="sep">★</span>
+        ISTANBUL (AFP) — Doner exports reach all-time high as demand surges across Europe
+        <span class="sep">★</span>
+        HEALTH: Experts say pita bread can cure mild sadness — results inconclusive
+        <span class="sep">★</span>
+        POLITICS: Mayor promises new kebab lane on main road — awaiting approval
+        <span class="sep">★</span>
+        🔥 TODAY'S SPECIAL: All sizes · All day · Maximum satisfaction guaranteed
+    </div>
+</div>
+
+<!-- HEADER -->
+<header>
+    <img src="static/img/logo.png" alt="Pita Daiza Logo" class="logo">
+    <div class="header-text">
+        <h1>Pita Daiza</h1>
+        <p>A Wild Culinary Adventure</p>
+    </div>
+</header>
+
+<!-- MENU -->
+<main>
+
+    <div class="section-title">— Our Famous Kebabs —</div>
+
+    <!-- SMALL -->
+    <div class="menu-item item-small">
+        <div class="item-info">
+            <div class="item-name">Small Kebab <span class="item-animal">🐔</span></div>
+            <div class="item-desc">Tender strips · fresh salad · warm pita · house sauce</div>
+            <span class="item-badge">Starter Size</span>
+        </div>
+        <div class="item-price">
+            <div class="price-amount">5.50</div>
+            <div class="price-currency">🪙 baco coins</div>
+        </div>
+    </div>
+
+    <!-- MEDIUM -->
+    <div class="menu-item item-medium">
+        <div class="item-info">
+            <div class="item-name">Medium Kebab <span class="item-animal">🦃</span></div>
+            <div class="item-desc">Double meat · loaded salad · double pita · two sauces</div>
+            <span class="item-badge">Most Popular</span>
+        </div>
+        <div class="item-price">
+            <div class="price-amount">7.90</div>
+            <div class="price-currency">🪙 baco coins</div>
+        </div>
+    </div>
+
+    <!-- LARGE — SVG ostrich (no ostrich emoji exists in Unicode) -->
+    <div class="menu-item item-large">
+        <div class="item-info">
+            <div class="item-name">
+                Large Kebab
+                <span class="item-animal" title="ostrich">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 62" width="40" height="46"
+                         style="display:inline-block;vertical-align:middle;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.4))">
+                        <!-- tail plumes -->
+                        <ellipse cx="11" cy="38" rx="8" ry="5"  transform="rotate(30,11,38)"  fill="rgba(255,255,255,0.7)"/>
+                        <ellipse cx="9"  cy="43" rx="6" ry="3.5" transform="rotate(40,9,43)"  fill="rgba(255,255,255,0.5)"/>
+                        <!-- body -->
+                        <ellipse cx="25" cy="39" rx="13" ry="10" fill="white"/>
+                        <!-- wing -->
+                        <ellipse cx="36" cy="36" rx="7" ry="4" transform="rotate(-18,36,36)" fill="rgba(255,255,255,0.75)"/>
+                        <!-- neck -->
+                        <rect x="22" y="16" width="6" height="23" rx="3" fill="#FFF3CD"/>
+                        <!-- head -->
+                        <ellipse cx="25" cy="13" rx="6" ry="6" fill="#FFF3CD"/>
+                        <!-- beak upper -->
+                        <path d="M30 11.5 Q38 11 38 13 Q38 14 30 13.5 Z" fill="#FFD54F"/>
+                        <!-- beak lower -->
+                        <path d="M30 13.5 Q37 14 37 15.5 Q36 16 30 15 Z" fill="#FFB300"/>
+                        <!-- eye -->
+                        <circle cx="27" cy="11" r="2"   fill="#1a0a00"/>
+                        <circle cx="27.7" cy="10.3" r="0.7" fill="white"/>
+                        <!-- legs -->
+                        <rect x="19" y="48" width="4" height="12" rx="2" fill="#FFD54F"/>
+                        <rect x="28" y="48" width="4" height="12" rx="2" fill="#FFD54F"/>
+                        <!-- feet -->
+                        <rect x="15" y="58" width="8"  height="2.5" rx="1.2" fill="#FFB300"/>
+                        <rect x="24" y="58" width="8"  height="2.5" rx="1.2" fill="#FFB300"/>
+                        <rect x="21" y="56" width="3"  height="4"   rx="1.5" fill="#FFD54F"/>
+                        <rect x="30" y="56" width="3"  height="4"   rx="1.5" fill="#FFD54F"/>
+                    </svg>
+                </span>
+            </div>
+            <div class="item-desc">Triple meat · mountain of salad · triple pita · unlimited sauces · legend status</div>
+            <span class="item-badge">⚠ Serious Hunger Only</span>
+        </div>
+        <div class="item-price">
+            <div class="price-amount">10.50</div>
+            <div class="price-currency">🪙 baco coins</div>
+        </div>
+    </div>
+
+    <!-- EXTRAS -->
+    <div class="section-title">— Extras —</div>
+    <div class="extras-grid">
+        <div class="extra-item"><span class="extra-name">Extra Meat</span><span class="extra-price">+2.00 🪙</span></div>
+        <div class="extra-item"><span class="extra-name">Extra Pita</span><span class="extra-price">+0.80 🪙</span></div>
+        <div class="extra-item"><span class="extra-name">Cheese</span><span class="extra-price">+0.90 🪙</span></div>
+        <div class="extra-item"><span class="extra-name">Jalapeños</span><span class="extra-price">+0.50 🪙</span></div>
+        <div class="extra-item"><span class="extra-name">Extra Sauce</span><span class="extra-price">+0.50 🪙</span></div>
+        <div class="extra-item"><span class="extra-name">Side Chips</span><span class="extra-price">+1.50 🪙</span></div>
+    </div>
+
+    <!-- SAUCES -->
+    <div class="section-title">— Sauces —</div>
+    <div class="sauces-row">
+        <div class="sauce-pill">🧄 Garlic</div>
+        <div class="sauce-pill">🌶️ Chilli</div>
+        <div class="sauce-pill">🔥 BBQ</div>
+        <div class="sauce-pill">🥭 Mango</div>
+        <div class="sauce-pill">🫙 Harissa</div>
+    </div>
+    <div class="sauces-note">First sauce always free · Additional sauces 0.50 🪙 each</div>
+
+    <div class="notice">
+        ⚠ Please inform staff of any allergies before ordering · Contains: Gluten · Dairy · May contain traces of pure joy
+    </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="weather-widget">
+        <div class="weather-icon" id="weatherIcon">⛅</div>
+        <div>
+            <span class="weather-location">Breda, NL</span>
+            <div class="weather-temp" id="weatherTemp">--°C</div>
+            <div class="weather-desc" id="weatherDesc">Fetching weather...</div>
+        </div>
+    </div>
+
+    <div>
+        <div class="footer-clock" id="clock">00:00:00</div>
+        <div class="footer-sub">Local Time</div>
+    </div>
+
+    <div class="footer-right">
+        <div class="footer-brand">🌍 Est. Savannah — Delivered Worldwide</div>
+        <div class="footer-tagline">Order here or call us</div>
+        <div class="footer-phone">0800 PITA DAI</div>
+    </div>
+</footer>
+
+<script>
+    // Live clock
+    function tick() {
+        const n = new Date();
+        document.getElementById('clock').textContent =
+            [n.getHours(), n.getMinutes(), n.getSeconds()]
+            .map(v => String(v).padStart(2,'0')).join(':');
+    }
+    setInterval(tick, 1000); tick();
+
+    // Simulated weather
+    const weathers = [
+        { icon:'☀️',  temp:'19°C', desc:'Sunny — perfect pita weather' },
+        { icon:'🌧️',  temp:'11°C', desc:'Rainy — stay in, order large' },
+        { icon:'⛅',  temp:'14°C', desc:'Cloudy · kebab always helps' },
+        { icon:'🌩️',  temp:'9°C',  desc:'Stormy · the ostrich approves' },
+        { icon:'🌤️',  temp:'17°C', desc:'Mostly sunny · eat outside' },
+    ];
+    const w = weathers[Math.floor(Math.random() * weathers.length)];
+    document.getElementById('weatherIcon').textContent = w.icon;
+    document.getElementById('weatherTemp').textContent = w.temp;
+    document.getElementById('weatherDesc').textContent = w.desc;
+</script>
+</body>
+</html>
